@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Vokativ : PHP class used to convert first names from Serbian language into their vocative case.">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Vokativ</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/avramovic/Vokativ">View on GitHub</a>
+
+          <h1 id="project_title">Vokativ</h1>
+          <h2 id="project_tagline">PHP class used to convert first names from Serbian language into their vocative case.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/avramovic/Vokativ/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/avramovic/Vokativ/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>Serbian language uses vocative case in order to address a person, so when someone register to a site with name Filip it is okay to greet (address) them in English with "Hello Filip", but in Serbian it would be "Zdravo Filipe", and "Zdravo Filip" is not correct and really sounds strange. But vocative is not as simple as appending "e" to a name. It has a set of rules and this PHP class tries to apply those rules to all Serbian names. If it can't, it'll use the built-in dictionary (nominative =&gt; vocative) to find a correct form.</p>
+
+<p>Note that it is not perfect and please notify me if you find any erroneously converted names. PRs are also welcome.</p>
+
+<h2>
+<a id="intallation" class="anchor" href="#intallation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Intallation</h2>
+
+<p>Install using composer with:</p>
+
+<p><code>composer require avram/vokativ</code></p>
+
+<p>Or manually by cloning this repository:</p>
+
+<p><code>git clone https://github.com/avramovic/Vokativ.git</code></p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<pre><code>&lt;?php
+require 'vendor/autoload.php';
+
+use Avram\Vokativ\Vokativ;
+use Avram\Vokativ\Dictionary\VokativIniDictionary;
+
+$nominativ = 'Filip';
+$vokativ = new Vokativ(new VokativIniDictionary());
+
+header('Content-Type: text/html; charset=utf-8');
+
+echo "Vocative case for the \"$nominativ\" is: " . $vokativ-&gt;make($nominativ) . " (source: " . $vokativ-&gt;source() . ")";
+</code></pre>
+
+<p>You should get output like this:</p>
+
+<pre><code>Vocative case for the "Filip" is: Filipe (source: dictionary)
+</code></pre>
+
+<p>Inspect the source code to see what methods are available in this class. But usually the <code>make()</code> method will be all you need.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Vokativ maintained by <a href="https://github.com/avramovic">avramovic</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
