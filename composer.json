@@ -1,0 +1,19 @@
+{
+    "name": "avram/vokativ",
+    "description": "Library used to convert first names from Serbian language into their vocative case.",
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "Nemanja Avramovic",
+            "email": "avramyu@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Avram\\Vokativ\\": "src/"
+        }
+    }
+}
