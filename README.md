@@ -43,7 +43,7 @@ This package comes with Laravel service provider and facade to make it easier to
 
     Avram\Vokativ\Provider\VokativServiceProvider::class,
 
-Then, right below that, add the facade:
+Then, right below that, in the list of facades, add this:
 
     'Vokativ'   => Avram\Vokativ\Facade\Vokativ::class,
 
