@@ -20,6 +20,8 @@ Or manually by cloning this repository:
 
 ## Usage
 
+### Native
+
     <?php
     require 'vendor/autoload.php';
 
@@ -29,12 +31,31 @@ Or manually by cloning this repository:
     $nominativ = 'Filip';
     $vokativ = new Vokativ(new VokativIniDictionary());
 
-    header('Content-Type: text/html; charset=utf-8');
-
-    echo "Vocative case for the \"$nominativ\" is: " . $vokativ->make($nominativ) . " (source: " . $vokativ->source() . ")";
+    echo "Vocative case for \"$nominativ\" is: " . $vokativ->make($nominativ) . " (source: " . $vokativ->source() . ")";
 
 You should get output like this:
 
-    Vocative case for the "Filip" is: Filipe (source: dictionary)
+    Vocative case for "Filip" is: Filipe (source: dictionary)
 
-Inspect the source code to see what methods are available in this class. But usually the `make()` method will be all you need.
+### Laravel
+
+This package comes with Laravel service provider and facade to make it easier to use it from any place in your code. Simply open `config/app.php` file and add this to service provider list:
+
+    Avram\Vokativ\Provider\VokativServiceProvider::class,
+
+Then, right below that, add the facade:
+
+    'Vokativ'   => Avram\Vokativ\Facade\Vokativ::class,
+
+After that, you can use the following code anywhere in your project:
+
+    $vokativ = Vokativ::make("Filip");
+
+    //or in views
+    Zdravo {{ Vokativ::make("Filip") }}!
+
+*Note*: While this library will work fine with most names, it can fail with some. The Laravel facade provides another function, `Vokativ::safe("Filip")` which will return vocative case only if it's found in the dictionary, and if not it will return nominative case (original case). For such cases you might want to extend the default dictionary, and you can do so by publishing assets from this package:
+
+    php artisan vendor:publish
+
+This will copy the dictionary files into `storage/avram/vokativ` and since the Laravel integraton uses INI file by default, you'll want to edit `storage/avram/vokativ/vokativ.ini`. The facade will automatically switch to using published dictionary once it's published.
