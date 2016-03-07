@@ -61,8 +61,6 @@ use Avram\Vokativ\Dictionary\VokativIniDictionary;
 $nominativ = 'Filip';
 $vokativ = new Vokativ(new VokativIniDictionary());
 
-header('Content-Type: text/html; charset=utf-8');
-
 echo "Vocative case for \"$nominativ\" is: " . $vokativ-&gt;make($nominativ) . " (source: " . $vokativ-&gt;source() . ")";
 </code></pre>
 
