@@ -54,7 +54,7 @@ After that, you can use the following code anywhere in your project:
     //or in views
     Zdravo {{ Vokativ::make("Filip") }}!
 
-*Note*: While this library will work fine with most names, it can fail with some. The Laravel facade provides another function, `Vokativ::safe("Filip")` which will return vocative case only if it's found in the dictionary, and if not it will return nominative case (original case). For such cases you might want to extend the default dictionary, and you can do so by publishing assets from this package:
+*Note*: While this library will work fine with most names, it can fail with some. The Laravel facade provides another function, `Vokativ::safe("Filip")` which will return vocative case only if it's found in the dictionary, and if not it will return nominative case (original string). For such cases you might want to extend the default dictionary, and you can do so by publishing assets from this package:
 
     php artisan vendor:publish
 
