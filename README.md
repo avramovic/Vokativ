@@ -59,3 +59,15 @@ After that, you can use the following code anywhere in your project:
     php artisan vendor:publish
 
 This will copy the dictionary files into `storage/avram/vokativ` and since the Laravel integraton uses INI file by default, you'll want to edit `storage/avram/vokativ/vokativ.ini`. The facade will automatically switch to using published dictionary once it's published.
+
+### Symfony Bundle
+This package comes bundled with a Symfony service and a Twig extension. To enable it, add:
+
+    new Avram\Vokativ\VokativBundle\AvramVokativBundle(),
+    
+to `$bundles` array in `AppKernel.php`. Then, you can use them in your Symfony code:
+
+    // in Twig 
+    Zdravo {{ "Filip"|vokativ }}!
+    // in controllers
+    $vokativ = $this->get("avram_vokativ.generator")->make("Filip");
