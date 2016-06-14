@@ -1,0 +1,14 @@
+services:
+    avram_vokativ.ini_dictionary:
+        class: Avram\Vokativ\Dictionary\VokativIniDictionary
+        arguments: []
+
+    avram_vokativ.generator:
+        class: Avram\Vokativ\Vokativ
+        arguments: ['@avram_vokativ.ini_dictionary']
+
+    avram_vokativ.extension:
+        class: Avram\Vokativ\VokativBundle\Twig\VokativExtension
+        arguments: ['@avram_vokativ.generator']
+        tags:
+            - { name: twig.extension }
