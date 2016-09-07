@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/avramovic/Vokativ">View on GitHub</a>
 
           <h1 id="project_title">Vokativ</h1>
-          <h2 id="project_tagline">PHP library used to convert first names from Serbian language into their vocative case.</h2>
+          <h2 id="project_tagline">PHP class used to convert first names from Serbian language into their vocative case.</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/avramovic/Vokativ/zipball/master">Download this project as a .zip file</a>
@@ -31,10 +31,15 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h2>
+        <h1>
+<a id="vokativ" class="anchor" href="#vokativ" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Vokativ</h1>
+
+<p>PHP class used to convert first names from Serbian language into their vocative case.</p>
+
+<h2>
 <a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h2>
 
-<p>Serbian language uses vocative case in order to address a person, so when someone register to a site with name Filip it is okay to greet (address) them in English with "Hello Filip", but in Serbian it would be "Zdravo Filipe", and "Zdravo Filip" is not correct and really sounds strange. But vocative is not as simple as appending "e" to a name. It has a set of rules and this PHP library tries to apply those rules to all Serbian names. If it can't, it'll use the built-in dictionary (nominative =&gt; vocative) to find a correct form.</p>
+<p>Serbian language uses vocative case in order to address a person, so when someone register to a site with name Filip it is okay to greet (address) them in English with "Hello Filip", but in Serbian it would be "Zdravo Filipe", and "Zdravo Filip" is not correct and really sounds strange. But vocative is not as simple as appending "e" to a name. It has a set of rules and this PHP class tries to apply those rules to all Serbian names. If it can't, it'll use the built-in dictionary (nominative =&gt; vocative) to find a correct form.</p>
 
 <p>Note that it is not perfect and please notify me if you find any erroneously converted names. PRs are also welcome.</p>
 
@@ -51,6 +56,9 @@
 
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="native" class="anchor" href="#native" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Native</h3>
 
 <pre><code>&lt;?php
 require 'vendor/autoload.php';
@@ -69,14 +77,49 @@ echo "Vocative case for \"$nominativ\" is: " . $vokativ-&gt;make($nominativ) . "
 <pre><code>Vocative case for "Filip" is: Filipe (source: dictionary)
 </code></pre>
 
-<p>Inspect the source code to see what methods are available in this class. But usually the <code>make()</code> method will be all you need.</p>
+<h3>
+<a id="laravel" class="anchor" href="#laravel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laravel</h3>
 
-<h2>
-<a id="laravel" class="anchor" href="#laravel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laravel</h2>
+<p>This package comes with Laravel service provider and facade to make it easier to use it from any place in your code. Simply open <code>config/app.php</code> file and add this to service provider list:</p>
 
-<p>This library provides easy Laravel 5 integration. <a href="https://github.com/avramovic/Vokativ#laravel">Learn more</a>.</p>
+<pre><code>Avram\Vokativ\Provider\VokativServiceProvider::class,
+</code></pre>
 
+<p>Then, right below that, in the list of facades, add this:</p>
 
+<pre><code>'Vokativ'   =&gt; Avram\Vokativ\Facade\Vokativ::class,
+</code></pre>
+
+<p>After that, you can use the following code anywhere in your project:</p>
+
+<pre><code>$vokativ = Vokativ::make("Filip");
+
+//or in views
+Zdravo {{ Vokativ::make("Filip") }}!
+</code></pre>
+
+<p><em>Note</em>: While this library will work fine with most names, it can fail with some. The Laravel facade provides another function, <code>Vokativ::safe("Filip")</code> which will return vocative case only if it's found in the dictionary, and if not it will return nominative case (original string). For such cases you might want to extend the default dictionary, and you can do so by publishing assets from this package:</p>
+
+<pre><code>php artisan vendor:publish
+</code></pre>
+
+<p>This will copy the dictionary files into <code>storage/avram/vokativ</code> and since the Laravel integraton uses INI file by default, you'll want to edit <code>storage/avram/vokativ/vokativ.ini</code>. The facade will automatically switch to using published dictionary once it's published.</p>
+
+<h3>
+<a id="symfony-bundle" class="anchor" href="#symfony-bundle" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Symfony Bundle</h3>
+
+<p>This package comes bundled with a Symfony service and a Twig extension. To enable it, add:</p>
+
+<pre><code>new Avram\Vokativ\VokativBundle\AvramVokativBundle(),
+</code></pre>
+
+<p>to <code>$bundles</code> array in <code>AppKernel.php</code>. Then, you can use them in your Symfony code:</p>
+
+<pre><code>// in Twig 
+Zdravo {{ "Filip"|vokativ }}!
+// in controllers
+$vokativ = $this-&gt;get("avram_vokativ.generator")-&gt;make("Filip");
+</code></pre>
       </section>
     </div>
 
@@ -88,7 +131,17 @@ echo "Vocative case for \"$nominativ\" is: " . $vokativ-&gt;make($nominativ) . "
       </footer>
     </div>
 
-    
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-369402-10");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
 
   </body>
 </html>
