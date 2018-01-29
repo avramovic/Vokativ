@@ -1,7 +1,7 @@
 {
     "name": "avram/vokativ",
     "description": "Library used to convert first names from Serbian language into their vocative case.",
-    "license": "MIT License",
+    "license": "MIT",
     "authors": [
         {
             "name": "Nemanja Avramovic",
